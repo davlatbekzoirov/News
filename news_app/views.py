@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from unicodedata import category
+
 from .models import Category, News
 
 def news_list(request):
@@ -15,3 +17,14 @@ def news_detail(request, id):
     }
 
     return render(request, "news/news_detail.html", context=context)
+
+
+def homePageView(request):
+    news = News.published.all()
+    categories = Category.objects.all()
+    context = {
+        'news': news,
+        'categories': categories,
+    }
+
+    return render(request, "news/home.html", context=context)
