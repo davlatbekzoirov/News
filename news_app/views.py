@@ -22,26 +22,16 @@ def news_detail(request, id):
 
 
 def homePageView(request):
-    news = News.published.all()
+    news_list = News.published.all()
     categories = Category.objects.all()
+    featured_news = news_list[:5]
+
     context = {
-        'news': news,
+        'news_list': news_list,
+        'featured_news': featured_news,
         'categories': categories,
     }
-
     return render(request, "news/home.html", context=context)
-
-# def contactPageView(request):
-#     form = ContactForm(request.POST or None)
-#     if request.method == "POST" and form.is_valid():
-#         form.save()
-#         return HttpResponse("<h2> Thank you </h2>")
-#
-#     context = {
-#         'form': form,
-#     }
-#
-#     return render(request, "news/contact.html", context=context)
 
 class ContactPageView(TemplateView):
     template_name = "news/contact.html"
