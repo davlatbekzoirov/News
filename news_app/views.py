@@ -1,7 +1,7 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from unicodedata import category
-
 from .models import Category, News
+from .forms import ContactForm
 
 def news_list(request):
     news_list = News.published.all()
@@ -30,7 +30,16 @@ def homePageView(request):
     return render(request, "news/home.html", context=context)
 
 def contactPageView(request):
-    return render(request, "news/contact.html", context={})
+    form = ContactForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return HttpResponse("<h2> Thank you </h2>")
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, "news/contact.html", context=context)
 
 def categoryPageView(request):
     return render(request, "news/category.html", context={})
