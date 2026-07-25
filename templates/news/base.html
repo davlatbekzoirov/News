@@ -100,13 +100,12 @@
                 <div class="navbar-nav mr-auto py-0">
                     <a href="{% url 'home_page' %}" class="nav-item nav-link active">Home</a>
                     <a href="category.html" class="nav-item nav-link">Category</a>
-                    <a href="single.html" class="nav-item nav-link">Single News</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Xabarlar</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="#" class="dropdown-item">Menu item 1</a>
-                            <a href="#" class="dropdown-item">Menu item 2</a>
-                            <a href="#" class="dropdown-item">Menu item 3</a>
+                            {% for cat in categories %}
+                                <a href="#" class="dropdown-item">{{ cat.name}}</a>
+                            {% endfor %}
                         </div>
                     </div>
                     <a href="{% url 'contact_page' %}" class="nav-item nav-link">Contact</a>
@@ -172,17 +171,6 @@
                         </div>
                     </div>
                     <!-- Social Follow End -->
-
-                    <!-- Ads Start -->
-                    <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Advertisement</h4>
-                        </div>
-                        <div class="bg-white text-center border border-top-0 p-3">
-                            <a href=""><img class="img-fluid" src="{% static 'images/news-800x500-2.jpg' %}" alt=""></a>
-                        </div>
-                    </div>
-                    <!-- Ads End -->
 
                     <!-- Popular News Start -->
                     <div class="mb-3">
