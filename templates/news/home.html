@@ -14,10 +14,10 @@
                         <img class="img-fluid h-100" src="{{ news.image.url }}" style="object-fit: cover;">
                         <div class="overlay">
                             <div class="mb-2">
-                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="">{{ news.category }}</a>
-                                <a class="text-white" href="{% url 'news_detail_page' news.pk %}">{{ news.publish_time|date:"M d, Y" }}</a>
+                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                                <a class="text-white" href="{{ news.get_absolute_url }}">{{ news.publish_time|date:"M d, Y" }}</a>
                             </div>
-                            <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title }}</a>
+                            <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="{{ news.get_absolute_url }}">{{ news.title }}</a>
                         </div>
                     </div>
                 {% endfor %}
@@ -32,10 +32,10 @@
                             <div class="overlay">
                                 <div class="mb-2">
                                     <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                        href="">{{ news.category }}</a>
-                                    <a class="text-white" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                                        href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                                    <a class="text-white" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                                 </div>
-                                <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title }}</a>
+                                <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{{ news.get_absolute_url }}">{{ news.title }}</a>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center ml-3"
                         style="width: calc(100% - 170px); padding-right: 90px;">
                         {% for news in news_list|slice:":2" %}
-                            <div class="text-truncate"><a class="text-white text-uppercase font-weight-semi-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title }}</a></div>
+                            <div class="text-truncate"><a class="text-white text-uppercase font-weight-semi-bold" href="{{ news.get_absolute_url }}">{{ news.title }}</a></div>
                         {% endfor %}
                     </div>
                 </div>
@@ -85,10 +85,10 @@
                 <div class="overlay">
                     <div class="mb-2">
                         <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                            href="{% url 'news_detail_page' news.pk %}">{{ news.category.name }}</a>
-                        <a class="text-white" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                            href="{{ news.get_absolute_url }}">{{ news.category.name }}</a>
+                        <a class="text-white" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                     </div>
-                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title|truncatechars:40 }}</a>
+                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{{ news.get_absolute_url }}">{{ news.title|truncatechars:40 }}</a>
                 </div>
             </div>
             {% empty %}
@@ -116,10 +116,10 @@
                     <img class="img-fluid w-100" src="{{ news.image.url }}" style="height: 250px; object-fit: cover;">
                     <div class="bg-white border border-top-0 p-4">
                         <div class="mb-2">
-                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="">{{ news.category }}</a>
-                            <a class="text-body" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                            <a class="text-body" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                         </div>
-                        <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title|truncatewords:5 }}</a>
+                        <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ news.get_absolute_url }}">{{ news.title|truncatewords:5 }}</a>
                         <p class="m-0">{{ news.body|truncatewords:12 }}</p>
                     </div>
                     <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
@@ -142,10 +142,10 @@
                     <img class="img-fluid" src="{{ news.image.url }}" style="width: 110px; height: 110px; min-width: 110px; object-fit: cover;" alt="">
                     <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
                         <div class="mb-2">
-                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">{{ news.category }}</a>
-                            <a class="text-body" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                            <a class="text-body" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                         </div>
-                        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title|truncatewords:5 }}</a>
+                        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ news.get_absolute_url }}">{{ news.title|truncatewords:5 }}</a>
                     </div>
                 </div>
             {% endfor %}
@@ -157,10 +157,10 @@
                     <img class="img-fluid" src="{{ news.image.url }}" style="width: 110px; height: 110px; min-width: 110px; object-fit: cover;" alt="">
                     <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
                         <div class="mb-2">
-                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">{{ news.category }}</a>
-                            <a class="text-body" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                            <a class="text-body" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                         </div>
-                        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title|truncatewords:5 }}</a>
+                        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ news.get_absolute_url }}">{{ news.title|truncatewords:5 }}</a>
                     </div>
                 </div>
             {% endfor %}
@@ -175,10 +175,10 @@
                     <div class="col-md-6 d-flex flex-column border bg-white h-100 px-0">
                         <div class="mt-auto p-4">
                             <div class="mb-2">
-                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="">{{ news.category }}</a>
-                                <a class="text-body" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                                <a class="text-body" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                             </div>
-                            <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title|truncatewords:6 }}</a>
+                            <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ news.get_absolute_url }}">{{ news.title|truncatewords:6 }}</a>
                             <p class="m-0">{{ news.body|truncatewords:10 }}</p>
                         </div>
                         <div class="d-flex justify-content-between bg-white border-top mt-auto p-4">
@@ -202,10 +202,10 @@
                 <img class="img-fluid" src="{{ news.image.url }}" style="width: 110px; height: 110px; min-width: 110px; object-fit: cover;" alt="">
                 <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
                     <div class="mb-2">
-                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">{{ news.category }}</a>
-                        <a class="text-body" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                        <a class="text-body" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                     </div>
-                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title|truncatewords:5 }}</a>
+                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ news.get_absolute_url }}">{{ news.title|truncatewords:5 }}</a>
                 </div>
             </div>
             {% endfor %}
@@ -216,10 +216,10 @@
                 <img class="img-fluid" src="{{ news.image.url }}" style="width: 110px; height: 110px; min-width: 110px; object-fit: cover;" alt="">
                 <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
                     <div class="mb-2">
-                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="">{{ news.category }}</a>
-                        <a class="text-body" href="{% url 'news_detail_page' news.pk %}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
+                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ news.get_absolute_url }}">{{ news.category }}</a>
+                        <a class="text-body" href="{{ news.get_absolute_url }}"><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                     </div>
-                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{% url 'news_detail_page' news.pk %}">{{ news.title|truncatewords:5 }}</a>
+                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ news.get_absolute_url }}">{{ news.title|truncatewords:5 }}</a>
                 </div>
             </div>
             {% endfor %}
