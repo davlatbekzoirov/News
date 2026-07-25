@@ -1,6 +1,8 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from multiprocessing import context
+
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from .models import Category, News
 from .forms import ContactForm
@@ -32,6 +34,19 @@ def homePageView(request):
         'categories': categories,
     }
     return render(request, "news/home.html", context=context)
+
+class HomePageView(ListView):
+    model =News
+    template_name = 'news/home.html'
+    context_object_name = 'news'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = self.model.objects.all()
+        context['news_list'] = self.model.published.all().order_by('-publish_time')
+        context['featured_news'] = self.model.published.all().order_by('-publish_time')[:5]
+
+        return context
 
 class ContactPageView(TemplateView):
     template_name = "news/contact.html"
