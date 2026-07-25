@@ -42,7 +42,7 @@ class HomePageView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = self.model.objects.all()
+        # context['categories'] = self.model.objects.all()
         context['news_list'] = self.model.published.all().order_by('-publish_time')
         context['featured_news'] = self.model.published.all().order_by('-publish_time')[:5]
 
