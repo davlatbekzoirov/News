@@ -36,7 +36,7 @@ class News(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("news_detail_page", args=[self.id])
+        return reverse("news_detail_page", args=[self.slug])
 
 class Contact(models.Model):
     name = models.CharField(max_length=150)
