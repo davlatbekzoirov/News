@@ -1,0 +1,26 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %} Yangilik yaratish {% endblock title %}
+
+{% block news %}
+    <div class="col-lg-8">
+        <div class="section-title mb-4">
+            <h4 class="m-0 text-uppercase font-weight-bold">Xabarni yaratish</h4>
+        </div>
+
+        <div class="bg-white p-4 border">
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-primary">Yaratish</button>
+                <a href="{{ news.get_absolute_url }}" class="btn btn-secondary">Bekor qilish</a>
+            </form>
+        </div>
+    </div>
+{% endblock news %}
