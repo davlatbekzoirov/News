@@ -1,0 +1,25 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %} {{ news.title }} o'chirish {% endblock title %}
+
+{% block news %}
+    <div class="col-lg-8">
+        <div class="section-title mb-4">
+            <h4 class="m-0 text-uppercase font-weight-bold">Xabarni o'chirish</h4>
+        </div>
+
+        <div class="bg-white p-4 border">
+            <p>
+                Rostdan ham <strong>"{{ news.title }}"</strong> nomli xabarni
+                o'chirmoqchimisiz? Bu amalni ortga qaytarib bo'lmaydi.
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Ha, o'chirish</button>
+                <a href="{{ news.get_absolute_url }}" class="btn btn-secondary">Bekor qilish</a>
+            </form>
+        </div>
+    </div>
+{% endblock news %}
