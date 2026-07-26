@@ -70,3 +70,28 @@ class ContactPageView(TemplateView):
 
 def categoryPageView(request):
     return render(request, "news/category.html", context={})
+
+class LocalNewsView(ListView):
+    model = News
+    template_name = 'news/mahalliy.html'
+    context_object_name = 'local_news'
+
+class SportNewsView(ListView):
+    model = News
+    template_name = 'news/sport.html'
+    context_object_name = 'sport_news'
+
+class AbroadNewsView(ListView):
+    model = News
+    template_name = 'news/abroad.html'
+    context_object_name = 'abroad_news'
+
+class TechnologyNewsView(ListView):
+    model = News
+    template_name = 'news/technology.html'
+    context_object_name = 'technology_news'
+
+class AvtoNewsView(ListView):
+    model = News
+    template_name = 'news/avto.html'
+    context_object_name = 'avto_news'
