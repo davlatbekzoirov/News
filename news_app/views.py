@@ -20,7 +20,7 @@ def news_detail(request, news):
         'news': news,
     }
 
-    return render(request, "news/news_detail.html", context=context)
+    return render(request, "news/single.html", context=context)
 
 
 def homePageView(request):
