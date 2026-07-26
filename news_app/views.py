@@ -76,22 +76,42 @@ class LocalNewsView(ListView):
     template_name = 'news/mahalliy.html'
     context_object_name = 'local_news'
 
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name='Mahalliy')
+        return news
+
 class SportNewsView(ListView):
     model = News
     template_name = 'news/sport.html'
     context_object_name = 'sport_news'
+
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name='Sport')
+        return news
 
 class AbroadNewsView(ListView):
     model = News
     template_name = 'news/abroad.html'
     context_object_name = 'abroad_news'
 
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name='Xorij')
+        return news
+
 class TechnologyNewsView(ListView):
     model = News
     template_name = 'news/technology.html'
     context_object_name = 'technology_news'
 
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name='Texnologiya')
+        return news
+
 class AvtoNewsView(ListView):
     model = News
     template_name = 'news/avto.html'
     context_object_name = 'avto_news'
+
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name='Avto')
+        return news
