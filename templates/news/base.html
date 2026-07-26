@@ -103,11 +103,11 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Xabarlar</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="#" class="dropdown-item">Mahalliy</a>
-                            <a href="#" class="dropdown-item">Sport</a>
-                            <a href="#" class="dropdown-item">Xorij</a>
-                            <a href="#" class="dropdown-item">Texnologiya</a>
-                            <a href="#" class="dropdown-item">Avto</a>
+                            <a href="{% url 'local_news_page' %}" class="dropdown-item">Mahalliy</a>
+                            <a href="{% url 'sport_news_page' %}" class="dropdown-item">Sport</a>
+                            <a href="{% url 'abroad_news_page' %}" class="dropdown-item">Xorij</a>
+                            <a href="{% url 'technology_news_page' %}" class="dropdown-item">Texnologiya</a>
+                            <a href="{% url 'avto_news_page' %}" class="dropdown-item">Avto</a>
                         </div>
                     </div>
                     <a href="{% url 'contact_page' %}" class="nav-item nav-link">Contact</a>
