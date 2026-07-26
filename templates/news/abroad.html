@@ -24,7 +24,7 @@
                     <div class="bg-white border border-top-0 p-4">
                         <div class="mb-2">
                             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                href="">{{ news.category.name }}</a>
+                                href="{{ news.get_absolute_url }}">{{ news.category.name }}</a>
                             <a class="text-body" href=""><small>{{ news.publish_time|date:"M d, Y" }}</small></a>
                         </div>
                         <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold"
