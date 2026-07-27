@@ -11,12 +11,15 @@
 
         <div class="bg-white p-4 border">
             {% if form.non_field_errors %}
-                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
             {% endif %}
 
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
+                <input type="hidden" name="next" value="{{ next }}">
                 <button type="submit" class="btn btn-primary">Kirish</button>
             </form>
         </div>
