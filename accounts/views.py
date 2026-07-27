@@ -20,4 +20,4 @@ def user_login(request):
     else:
         form = LoginForm()
         context = {'form': form}
-    return render(request, 'account/login.html', context=context)
+    return render(request, 'registration/login.html', context=context)

@@ -1,0 +1,17 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}Logout{% endblock title %}
+
+{% block news %}
+    <div class="col-lg-8">
+        <div class="section-title mb-4">
+            <h4 class="m-0 text-uppercase font-weight-bold">Tizimdan chiqdingiz</h4>
+        </div>
+
+        <div class="bg-white p-4 border">
+            <p>Siz tizimdan muvaffaqiyatli chiqdingiz.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Qayta kirish</a>
+        </div>
+    </div>
+{% endblock news %}
