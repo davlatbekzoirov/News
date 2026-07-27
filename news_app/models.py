@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
+
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -18,7 +20,7 @@ class News(models.Model):
         PUBLISHED = 'PB', 'Published'
 
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250, unique=True, blank=True)
     body = models.TextField()
     image = models.ImageField(upload_to='news/images', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -34,6 +36,17 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title) or f"news-{News.objects.count() + 1}"
+            slug = base_slug
+            counter = 1
+            while News.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("news_detail_page", args=[self.slug])
