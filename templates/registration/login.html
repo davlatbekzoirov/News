@@ -20,6 +20,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="hidden" name="next" value="{{ next }}">
+                <p>Parolni <a href="{% url 'password_reset' %}">ututdingizmi?</a></p>
                 <button type="submit" class="btn btn-primary">Kirish</button>
             </form>
         </div>
