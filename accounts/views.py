@@ -32,6 +32,7 @@ def dashboard_view(request):
 
     return render(request, 'pages/user_profile.html', context)
 
+
 def user_register(request):
     if request.method == 'POST':
         user_form = RegisterForm(request.POST)
@@ -39,9 +40,9 @@ def user_register(request):
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
-            context = {'new_user': user_form}
+            context = {'new_user': new_user}
             return render(request, 'account/register_done.html', context=context)
     else:
         user_form = RegisterForm()
-        context = {'user_form': user_form}
-        return render(request, 'account/register.html', context=context)
+    context = {'user_form': user_form}
+    return render(request, 'account/register.html', context=context)
