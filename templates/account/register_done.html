@@ -1,0 +1,29 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}Registration Complete{% endblock title %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 text-center">
+                <div class="bg-white border p-5">
+                    <i class="fa fa-check-circle text-primary mb-3" style="font-size: 3rem;"></i>
+                    <h4 class="text-uppercase font-weight-bold mb-3">You're All Set!</h4>
+                    <p class="mb-1">
+                        Thanks for registering, <strong>{{ new_user.username }}</strong>.
+                    </p>
+                    <p class="mb-4">
+                        Your account has been created successfully. You can now sign in and start reading.
+                    </p>
+                    <a href="{% url 'login' %}" class="btn btn-primary font-weight-bold px-4 py-2">Sign In</a>
+                    <a href="{% url 'home_page' %}" class="btn btn-outline-secondary font-weight-bold px-4 py-2">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block sidebar %}{% endblock sidebar %}
