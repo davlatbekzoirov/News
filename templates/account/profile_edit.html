@@ -1,0 +1,102 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %} Edit Profile {% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="section-title mb-4">
+                    <h4 class="m-0 text-uppercase font-weight-bold">Edit Profile</h4>
+                </div>
+
+                <div class="bg-white border p-4">
+
+                    {% if user_form.errors or profile_form.errors %}
+                        <div class="alert alert-danger">
+                            Please correct the errors below.
+                        </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="text-center mb-4">
+                            {% if user.profile.photo %}
+                                <img src="{{ user.profile.photo.url }}" alt="{{ user.username }}"
+                                     class="rounded-circle mb-3"
+                                     style="width: 130px; height: 130px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mx-auto mb-3"
+                                     style="width: 130px; height: 130px;">
+                                    <i class="fa fa-user fa-3x text-white"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="id_first_name" class="font-weight-semi-bold">First Name</label>
+                                <input type="text" name="first_name" id="id_first_name"
+                                       class="form-control"
+                                       value="{{ user_form.first_name.value|default_if_none:'' }}">
+                                {% if user_form.first_name.errors %}
+                                    <small class="text-danger">{{ user_form.first_name.errors|join:", " }}</small>
+                                {% endif %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id_last_name" class="font-weight-semi-bold">Last Name</label>
+                                <input type="text" name="last_name" id="id_last_name"
+                                       class="form-control"
+                                       value="{{ user_form.last_name.value|default_if_none:'' }}">
+                                {% if user_form.last_name.errors %}
+                                    <small class="text-danger">{{ user_form.last_name.errors|join:", " }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_email" class="font-weight-semi-bold">Email</label>
+                            <input type="email" name="email" id="id_email"
+                                   class="form-control"
+                                   value="{{ user_form.email.value|default_if_none:'' }}">
+                            {% if user_form.email.errors %}
+                                <small class="text-danger">{{ user_form.email.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_date_of_birth" class="font-weight-semi-bold">Date of Birth</label>
+                            <input type="date" name="date_of_birth" id="id_date_of_birth"
+                                   class="form-control"
+                                   value="{{ profile_form.date_of_birth.value|date:'Y-m-d'|default_if_none:'' }}">
+                            {% if profile_form.date_of_birth.errors %}
+                                <small class="text-danger">{{ profile_form.date_of_birth.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_photo" class="font-weight-semi-bold">Photo</label>
+                            <input type="file" name="photo" id="id_photo"
+                                   class="form-control-file">
+                            {% if profile_form.photo.errors %}
+                                <small class="text-danger">{{ profile_form.photo.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary font-weight-bold px-4 py-2 mt-3">
+                            <i class="fa fa-save mr-1"></i> Save Changes
+                        </button>
+                        <a href="{% url 'user_profile' %}" class="btn btn-outline-secondary font-weight-bold px-4 py-2 mt-3">
+                            Cancel
+                        </a>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

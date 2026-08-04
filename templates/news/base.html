@@ -110,7 +110,7 @@
 
                     <div class="navbar-nav ml-auto py-0 d-flex align-items-center">
                         {% if user.is_authenticated %}
-                            <span class="nav-item nav-link text-white font-weight-bold mb-0 pr-2"><a href="{% url 'user_profile' %}">{{ user.username }}</a></span>
+                            <span class="nav-item nav-link text-white font-weight-bold mb-0 pr-2"><a href="{% url 'edit_user_information' %}">{{ user.username }}</a></span>
                             <form method="post" action="{% url 'logout' %}" class="d-inline mb-0">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-light btn-sm font-weight-semi-bold px-3">
@@ -118,6 +118,9 @@
                                 </button>
                             </form>
                         {% else %}
+                            <a href="{% url 'user_register' %}" class="btn btn-primary btn-sm font-weight-semi-bold px-3">
+                                <i class="fa fa-sign-in-alt mr-1"></i>Ro'yxatdan o'tish
+                            </a>
                             <a href="{% url 'login' %}" class="btn btn-primary btn-sm font-weight-semi-bold px-3">
                                 <i class="fa fa-sign-in-alt mr-1"></i>Kirish
                             </a>
