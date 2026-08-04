@@ -10,11 +10,39 @@
         </div>
 
         <div class="bg-white p-4 border">
+
+            <div class="d-flex align-items-center mb-4">
+                {% if user.profile.photo %}
+                    <img src="{{ user.profile.photo.url }}" alt="{{ user.username }}"
+                         class="rounded-circle mr-4"
+                         style="width: 100px; height: 100px; object-fit: cover;">
+                {% else %}
+                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mr-4"
+                         style="width: 100px; height: 100px;">
+                        <i class="fa fa-user fa-2x text-white"></i>
+                    </div>
+                {% endif %}
+                <div>
+                    <h5 class="m-0 font-weight-bold">{{ user.username }}</h5>
+                    <small class="text-muted">{{ user.email }}</small>
+                </div>
+            </div>
+
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>First name:</strong> {{ user.first_name }}</p>
-            <p><strong>Last name:</strong> {{ user.last_name }}</p>
-            <h5><a href="{% url 'password_change' %}">Parolni almashtirish</a></h5>
+            <p><strong>First name:</strong> {{ user.first_name|default:"—" }}</p>
+            <p><strong>Last name:</strong> {{ user.last_name|default:"—" }}</p>
+            <p><strong>Date of birth:</strong> {{ user.profile.date_of_birth|date:"M d, Y"|default:"—" }}</p>
+
+            <div class="mt-4">
+                <a href="{% url 'edit_user_information' %}" class="btn btn-primary font-weight-bold px-4">
+                    <i class="fa fa-edit mr-1"></i> Ma'lumotlarni tahrirlash
+                </a>
+                <a href="{% url 'password_change' %}" class="btn btn-outline-secondary font-weight-bold px-4">
+                    <i class="fa fa-key mr-1"></i> Parolni almashtirish
+                </a>
+            </div>
+
         </div>
     </div>
 {% endblock news %}
