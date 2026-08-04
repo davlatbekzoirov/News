@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-
+from .models import Profile
 from .forms import LoginForm, RegisterForm
 from django.views.generic import CreateView
 
@@ -42,6 +42,7 @@ def user_register(request):
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
+            Profile.objects.create(user=new_user)
             context = {'new_user': new_user}
             return render(request, 'account/register_done.html', context=context)
     else:
