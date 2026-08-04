@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
@@ -28,6 +29,7 @@ def user_login(request):
         context = {'form': form}
     return render(request, 'registration/login.html', context=context)
 
+@login_required
 def dashboard_view(request):
     user = request.user
     context = {
@@ -66,7 +68,7 @@ def edit_user(request):
 
     return render(request, 'account/profile_edit.html', context={"user_form": user_form, "profile_form": profile_form})
 
-class EditUserView(View):
+class EditUserView(LoginRequiredMixin, View):
     def get(self, request):
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
