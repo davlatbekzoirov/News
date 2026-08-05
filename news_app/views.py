@@ -1,5 +1,7 @@
 from symtable import Class
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
@@ -22,7 +24,6 @@ def news_detail(request, news):
     }
 
     return render(request, "news/single.html", context=context)
-
 
 def homePageView(request):
     news_list = News.published.all().order_by('-publish_time')
@@ -117,17 +118,17 @@ class AvtoNewsView(ListView):
         news = self.model.published.all().filter(category__name='Avto')
         return news
 
-class NewsUpdateView(UpdateView):
+class NewsUpdateView(LoginRequiredMixin, UpdateView):
     model = News
     fields = ('title', 'body', 'image', 'category', 'status')
     template_name = 'crud/news_edit.html'
 
-class NewsDeleteView(DeleteView):
+class NewsDeleteView(LoginRequiredMixin, DeleteView):
     model = News
     template_name = 'crud/news_delete.html'
     success_url = reverse_lazy('home_page')
 
-class NewsCreateView(CreateView):
+class NewsCreateView(LoginRequiredMixin, CreateView):
     model = News
     template_name = 'crud/news_create.html'
     fields = '__all__'
