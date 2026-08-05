@@ -1,12 +1,10 @@
-from symtable import Class
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, UpdateView, DeleteView, CreateView
-
+from .custom_permissions import OnlyLoggedSuperUser
 from .models import Category, News
 from .forms import ContactForm
 
@@ -118,17 +116,17 @@ class AvtoNewsView(ListView):
         news = self.model.published.all().filter(category__name='Avto')
         return news
 
-class NewsUpdateView(LoginRequiredMixin, UpdateView):
+class NewsUpdateView(OnlyLoggedSuperUser, UpdateView):
     model = News
     fields = ('title', 'body', 'image', 'category', 'status')
     template_name = 'crud/news_edit.html'
 
-class NewsDeleteView(LoginRequiredMixin, DeleteView):
+class NewsDeleteView(OnlyLoggedSuperUser, DeleteView):
     model = News
     template_name = 'crud/news_delete.html'
     success_url = reverse_lazy('home_page')
 
-class NewsCreateView(LoginRequiredMixin, CreateView):
+class NewsCreateView(OnlyLoggedSuperUser, CreateView):
     model = News
     template_name = 'crud/news_create.html'
     fields = '__all__'
