@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -133,6 +133,7 @@ class NewsCreateView(OnlyLoggedSuperUser, CreateView):
     fields = '__all__'
 
 @login_required
+@user_passes_test(lambda u: u.is_staff)
 def admin_page_view(request):
     admin_user = User.objects.filter(is_superuser=True)
     context = {
