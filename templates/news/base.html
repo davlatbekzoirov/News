@@ -97,35 +97,41 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
-                <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="{% url 'home_page' %}" class="nav-item nav-link active">Home</a>
-                        <a href="{% url 'local_news_page' %}" class="nav-item nav-link">Mahalliy</a>
-                        <a href="{% url 'sport_news_page' %}" class="nav-item nav-link">Sport</a>
-                        <a href="{% url 'abroad_news_page' %}" class="nav-item nav-link">Xorij</a>
-                        <a href="{% url 'technology_news_page' %}" class="nav-item nav-link">Texnologiya</a>
-                        <a href="{% url 'avto_news_page' %}" class="nav-item nav-link">Avto</a>
-                        <a href="{% url 'contact_page' %}" class="nav-item nav-link">Contact</a>
-                    </div>
+                <div class="navbar-nav mr-auto py-0">
+                    <a href="{% url 'home_page' %}" class="nav-item nav-link active">Home</a>
+                    <a href="{% url 'local_news_page' %}" class="nav-item nav-link">Mahalliy</a>
+                    <a href="{% url 'sport_news_page' %}" class="nav-item nav-link">Sport</a>
+                    <a href="{% url 'abroad_news_page' %}" class="nav-item nav-link">Xorij</a>
+                    <a href="{% url 'technology_news_page' %}" class="nav-item nav-link">Texnologiya</a>
+                    <a href="{% url 'avto_news_page' %}" class="nav-item nav-link">Avto</a>
+                    <a href="{% url 'contact_page' %}" class="nav-item nav-link">Contact</a>
+                </div>
 
-                    <div class="navbar-nav ml-auto py-0 d-flex align-items-center">
-                        {% if user.is_authenticated %}
-                            <span class="nav-item nav-link text-white font-weight-bold mb-0 pr-2"><a href="{% url 'user_profile' %}">{{ user.username }}</a></span>
-                            <form method="post" action="{% url 'logout' %}" class="d-inline mb-0">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-outline-light btn-sm font-weight-semi-bold px-3">
-                                    <i class="fa fa-sign-out-alt mr-1"></i>Chiqish
-                                </button>
-                            </form>
-                        {% else %}
-                            <a href="{% url 'user_register' %}" class="btn btn-primary btn-sm font-weight-semi-bold px-3">
-                                <i class="fa fa-sign-in-alt mr-1"></i>Ro'yxatdan o'tish
-                            </a>
-                            <a href="{% url 'login' %}" class="btn btn-primary btn-sm font-weight-semi-bold px-3">
-                                <i class="fa fa-sign-in-alt mr-1"></i>Kirish
-                            </a>
-                        {% endif %}
-                    </div>
+                <form method="get" action="" class="form-inline my-2 my-lg-0 mr-lg-3">
+                    <input class="form-control form-control-sm mr-1" type="search" name="q"
+                           placeholder="Search news..." aria-label="Search" value="{{ request.GET.q }}">
+                    <button class="btn btn-primary btn-sm" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+
+                <div class="navbar-nav ml-auto py-0 d-flex align-items-center">
+                    {% if user.is_authenticated %}
+                        <span class="nav-item nav-link text-white font-weight-bold mb-0 pr-2"><a href="{% url 'user_profile' %}">{{ user.username }}</a></span>
+                        <form method="post" action="{% url 'logout' %}" class="d-inline mb-0">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-light btn-sm font-weight-semi-bold px-3">
+                                <i class="fa fa-sign-out-alt mr-1"></i>Chiqish
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'user_register' %}" class="btn btn-primary btn-sm font-weight-semi-bold px-3">
+                            <i class="fa fa-sign-in-alt mr-1"></i>Ro'yxatdan o'tish
+                        </a>
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-sm font-weight-semi-bold px-3">
+                            <i class="fa fa-sign-in-alt mr-1"></i>Kirish
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
