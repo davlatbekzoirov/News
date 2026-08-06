@@ -2,12 +2,13 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, UpdateView, DeleteView, CreateView
 from .custom_permissions import OnlyLoggedSuperUser
 from .models import Category, News
 from .forms import ContactForm, CommentForm
+from accounts.models import Profile
 
 def news_list(request):
     news_list = News.published.all()
@@ -20,13 +21,21 @@ def news_detail(request, news):
     news = get_object_or_404(News, slug=news, status=News.Status.PUBLISHED)
     comments = news.comments.filter(active=True)
     new_comment = None
+
+    profile_image = None
+    if request.user.is_authenticated:
+        profile_image = Profile.objects.filter(user=request.user).first()
+
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect(f"{reverse('login')}?next={request.path}")
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.news = news
             new_comment.user = request.user
             new_comment.save()
+            return redirect(news.get_absolute_url())
     else:
         comment_form = CommentForm()
 
@@ -35,8 +44,8 @@ def news_detail(request, news):
         'comments': comments,
         'new_comment': new_comment,
         'comment_form': comment_form,
+        'profile_image': profile_image,
     }
-
     return render(request, "news/single.html", context=context)
 
 def homePageView(request):
