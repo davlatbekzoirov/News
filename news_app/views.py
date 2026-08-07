@@ -164,3 +164,10 @@ def admin_page_view(request):
         'admin_users': admin_user,
     }
     return render(request, 'pages/admin_page.html', context=context)
+
+
+class SearchResultsView(ListView):
+    model = News
+    template_name = 'news/search_result.html'
+    context_object_name = 'all_news'
+    
