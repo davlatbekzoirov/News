@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -170,4 +171,7 @@ class SearchResultsView(ListView):
     model = News
     template_name = 'news/search_result.html'
     context_object_name = 'all_news'
-    
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return News.objects.filter(Q(title__icontains=query)|Q(body__icontains=query))
