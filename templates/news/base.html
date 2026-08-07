@@ -107,7 +107,7 @@
                     <a href="{% url 'contact_page' %}" class="nav-item nav-link">Contact</a>
                 </div>
 
-                <form method="get" action="" class="form-inline my-2 my-lg-0 mr-lg-3">
+                <form method="get" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0 mr-lg-3">
                     <input class="form-control form-control-sm mr-1" type="search" name="q"
                            placeholder="Search news..." aria-label="Search" value="{{ request.GET.q }}">
                     <button class="btn btn-primary btn-sm" type="submit">
