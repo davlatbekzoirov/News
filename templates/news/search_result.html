@@ -1,0 +1,84 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}Search Results{% endblock title %}
+
+{% block news %}
+<div class="col-lg-8">
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">
+            Search Results
+            {% if request.GET.q %}
+                for "{{ request.GET.q }}"
+            {% endif %}
+        </h4>
+    </div>
+
+    <div class="bg-white border border-top-0 p-3">
+        {% if all_news %}
+            <p class="text-muted mb-4">{{ all_news|length }} result{{ all_news|length|pluralize }} found</p>
+
+            {% for news in all_news %}
+                <div class="row mb-4 pb-4 {% if not forloop.last %}border-bottom{% endif %}">
+                    <div class="col-4">
+                        <a href="{{ news.get_absolute_url }}">
+                            {% if news.image %}
+                                <img src="{{ news.image.url }}" alt="{{ news.title }}"
+                                     class="img-fluid" style="width: 100%; height: 150px; object-fit: cover;">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="col-8">
+                        <div class="mb-2">
+                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="#">
+                                {{ news.category }}
+                            </a>
+                            <span class="text-body">
+                                <small>{{ news.publish_time|date:"M d, Y" }}</small>
+                            </span>
+                        </div>
+                        <a class="h5 d-block text-secondary text-uppercase font-weight-bold mb-2"
+                           href="{{ news.get_absolute_url }}">
+                            {{ news.title }}
+                        </a>
+                        <p class="m-0 text-body">
+                            {{ news.description|default:news.content|truncatewords:20 }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if is_paginated %}
+                <nav aria-label="Search results pagination">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                            </li>
+                        {% endif %}
+
+                        <li class="page-item disabled">
+                            <span class="page-link">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </li>
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Next</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fa fa-search fa-3x text-muted mb-3"></i>
+                <h5>No results found{% if request.GET.q %} for "{{ request.GET.q }}"{% endif %}</h5>
+                <p class="text-muted">Try different keywords or check your spelling.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock news %}
