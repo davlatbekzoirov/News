@@ -37,6 +37,7 @@ def news_detail(request, news):
 
 
     comments = news.comments.filter(active=True)
+    comment_count = comments.count()
     new_comment = None
 
     profile_image = None
@@ -60,6 +61,7 @@ def news_detail(request, news):
         'news': news,
         'comments': comments,
         'new_comment': new_comment,
+        'comment_count': comment_count,
         'comment_form': comment_form,
         'profile_image': profile_image,
     }
@@ -85,6 +87,7 @@ class NewsDetailView(HitCountDetailView):
             profile_image = Profile.objects.filter(user=request.user).first()
 
         context["comments"] = news.comments.filter(active=True)
+        context['comment_count'] = context['comments'].count()
         context["comment_form"] = kwargs.get("comment_form", CommentForm())
         context["profile_image"] = profile_image
         return context
