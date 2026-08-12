@@ -33,9 +33,7 @@ def news_detail(request, news):
         hitcontext["hit_counted"] = hitcount_response.hit_counted
         hitcontext['hit_message'] = hitcount_response.hit_message
         hitcontext['total_hits'] = hits
-        
-    hit_count = get_hitcount_model().objects.get_for_object(news)
-    from hitcount.views import HitCountDetailView
+
 
 
     comments = news.comments.filter(active=True)

@@ -1,5 +1,6 @@
 {% extends 'news/base.html' %}
 {% load static %}
+{% load hitcount_tags %}
 
 {% block title %} {{ news.title}} {% endblock title %}
 
@@ -34,7 +35,7 @@
                 </div>
             {% endif %}
             <div class="d-flex align-items-center">
-                <span class="ml-3"><i class="far fa-eye mr-2"></i>{{ news.view_count }}</span>
+                <span class="ml-3"><i class="far fa-eye mr-2"></i>{% get_hit_count for news %}</span>
                 <span class="ml-3"><i class="far fa-comment mr-2"></i>123</span>
             </div>
         </div>
