@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'hitcount',
+    'modeltranslation',
 
     'news_app',
     'accounts'
@@ -124,6 +125,8 @@ LANGUAGES = [
     ('en', _('English')),
     ('ru', _('Russian')),
 ]
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 
 
 # Static files (CSS, JavaScript, Images)
