@@ -6,6 +6,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, UpdateView, DeleteView, CreateView
+from hitcount.utils import get_hitcount_model
+from hitcount.views import HitCountMixin
+
 from .custom_permissions import OnlyLoggedSuperUser
 from .models import Category, News
 from .forms import ContactForm, CommentForm
@@ -20,6 +23,21 @@ def news_list(request):
 
 def news_detail(request, news):
     news = get_object_or_404(News, slug=news, status=News.Status.PUBLISHED)
+    context = {}
+    hit_count = get_hitcount_model().objects.get_for_object(news)
+    hits = hit_count.hits
+    hitcontext = context['hitcount'] = {'pk': hit_count.pk}
+    hitcount_response = HitCountMixin.hit_count(request, hit_count)
+    if hitcount_response.hit_counted:
+        hits = hits + 1
+        hitcontext["hit_counted"] = hitcount_response.hit_counted
+        hitcontext['hit_message'] = hitcount_response.hit_message
+        hitcontext['total_hits'] = hits
+        
+    hit_count = get_hitcount_model().objects.get_for_object(news)
+    from hitcount.views import HitCountDetailView
+
+
     comments = news.comments.filter(active=True)
     new_comment = None
 
