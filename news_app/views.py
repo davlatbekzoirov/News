@@ -5,9 +5,9 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, ListView, UpdateView, DeleteView, CreateView
+from django.views.generic import TemplateView, ListView, UpdateView, DeleteView, CreateView, DetailView
 from hitcount.utils import get_hitcount_model
-from hitcount.views import HitCountMixin
+from hitcount.views import HitCountMixin, HitCountDetailView
 
 from .custom_permissions import OnlyLoggedSuperUser
 from .models import Category, News
@@ -64,6 +64,47 @@ def news_detail(request, news):
         'profile_image': profile_image,
     }
     return render(request, "news/single.html", context=context)
+
+class NewsDetailView(HitCountDetailView):
+    model = News
+    template_name = "news/single.html"
+    context_object_name = "news"
+    slug_url_kwarg = "news"
+    count_hit = True
+
+    def get_queryset(self):
+        return News.objects.filter(status=News.Status.PUBLISHED)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        news = self.object
+        request = self.request
+
+        profile_image = None
+        if request.user.is_authenticated:
+            profile_image = Profile.objects.filter(user=request.user).first()
+
+        context["comments"] = news.comments.filter(active=True)
+        context["comment_form"] = kwargs.get("comment_form", CommentForm())
+        context["profile_image"] = profile_image
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not request.user.is_authenticated:
+            return redirect(f"{reverse('login')}?next={request.path}")
+
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.news = self.object
+            new_comment.user = request.user
+            new_comment.save()
+            return redirect(self.object.get_absolute_url())
+
+        context = self.get_context_data(comment_form=comment_form)
+        return self.render_to_response(context)
 
 def homePageView(request):
     news_list = News.published.all().order_by('-publish_time')
