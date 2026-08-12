@@ -20,6 +20,8 @@ def news_list(request):
 
 def news_detail(request, news):
     news = get_object_or_404(News, slug=news, status=News.Status.PUBLISHED)
+    news.view_count += 1
+    news.save()
     comments = news.comments.filter(active=True)
     new_comment = None
 
