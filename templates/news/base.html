@@ -105,6 +105,9 @@
                     <a href="{% url 'technology_news_page' %}" class="nav-item nav-link">Texnologiya</a>
                     <a href="{% url 'avto_news_page' %}" class="nav-item nav-link">Avto</a>
                     <a href="{% url 'contact_page' %}" class="nav-item nav-link">Contact</a>
+                    {% if user.is_authenticated and user.is_superuser %}
+                        <a href="{% url 'admin_page' %}" class="nav-item nav-link">Admin page</a>
+                    {% endif %}
                 </div>
 
                 <form method="get" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0 mr-lg-3">
